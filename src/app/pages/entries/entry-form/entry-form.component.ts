@@ -20,6 +20,15 @@ export class EntryFormComponent implements OnInit {
   submittingForm: boolean = false;
   entry: Entry = new Entry();
 
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandSeparator: '',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  };
+
   constructor(
     private entryService: EntryService,
     private route: ActivatedRoute,
