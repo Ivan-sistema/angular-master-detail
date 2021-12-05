@@ -15,12 +15,12 @@ import { CategoryService } from '../shared/service/category.service';
 
 export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
-  currentAction: string;
-  categoryForm: FormGroup;
-  pageTitle: string;
-  serverErrorMessages: string[] = null;
-  submittingForm: boolean = false;
-  category: Category = new Category();
+  currentAction: string;                // Novo / Alterar
+  categoryForm: FormGroup;              // definição de Formulario
+  pageTitle: string;                    // titulo da página, Editando ou Inserindo
+  serverErrorMessages: string[] = null; // array de erros, mensagems retornadas do Servidor
+  submittingForm: boolean = false;      // Controlar botão de submeter, desabilitar até que o server retorne uma resposta
+  category: Category = new Category();  // proprio objeto de Category
 
   constructor(
     private categoryService: CategoryService,
@@ -41,10 +41,10 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
   submitForm(){
     this.submittingForm = true;
-
-    if(this.currentAction == 'new')
+    
+    if (this.currentAction == "new")
       this.createCategory();
-    else
+    else 
       this.updateCategory();
 
   }
@@ -74,19 +74,20 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
       .subscribe(
         (category) => {
           this.category = category;
-          this.categoryForm.patchValue(category) // binds loaded category data to CategoryForm
+          this.categoryForm.patchValue(this.category) // binds loaded category data to CategoryForm
         },
         (error) => alert('Ocorreu um erro no servidor, tente novamente mais tarde')
       )
     }
   }
-
+  
   private setPageTitle(){
-    if(this.currentAction == 'new')
+    if (this.currentAction == "new")
+    {
       this.pageTitle = "Cadastro de Nova Categoria"
-    else{
-      const categoryName = this.category.name || ""
-      this.pageTitle = "Editando Categoria: "+ categoryName;
+    } else {
+      const categoryName = (this.category.name || "")
+      this.pageTitle = "Editando a Categoria: " +categoryName;
     }
   }
 
@@ -115,13 +116,13 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private actionsForSuccess(category: Category){
     toastr.success("Solicitação processada com sucesso!");
 
-    this.router.navigateByUrl("categories", {skipLocationChange: true}).then(
+    this.router.navigateByUrl("categories",{skipLocationChange: true}).then(
       () => this.router.navigate(["categories", category.id, "edit"])
-    )
+    ) 
   }
 
   private actionsForError(error){
-    toastr.error("Ocorreu um erro ao processar a sus solicitação!");
+    toastr.error("Ocorreu um erro ao processar a sua solicitação!");
     this.submittingForm = false;
 
     if(error.status === 422)
