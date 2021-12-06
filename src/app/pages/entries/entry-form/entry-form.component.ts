@@ -1,10 +1,12 @@
-import { toastr } from 'toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Entry } from '../shared/model/entry';
 import { EntryService } from '../shared/service/entry.service';
+import { Category } from '../../categories/shared/model/category.model';
+import { CategoryService } from './../../categories/shared/service/category.service';
+import { toastr } from 'toastr';
 
 @Component({
   selector: 'app-entry-form',
@@ -19,18 +21,30 @@ export class EntryFormComponent implements OnInit {
   serverErrorMessages: string[] = null;
   submittingForm: boolean = false;
   entry: Entry = new Entry();
+  categories: Array<Category>;
+
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandSeparator: '',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  };
 
   constructor(
     private entryService: EntryService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService
+    ) { }
 
   ngOnInit() {
     this.setCurrentAction();
     this.buildEntryForm();
     this.loadEntry();
+    this.loadCategories();
   }
 
   ngAfterContentChecked(){
@@ -47,6 +61,16 @@ export class EntryFormComponent implements OnInit {
 
   }
 
+  get typeOptions(): Array<any>{
+    return Object.entries(Entry.types).map(
+      ([value, text]) => {
+        return {
+          text: text,
+          value: value
+        }
+      })
+  }
+
 
   //PRIVATE METHODS
   private setCurrentAction(){
@@ -60,11 +84,11 @@ export class EntryFormComponent implements OnInit {
     this.entryForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
-      description: [null],
-      type: [null, [Validators.required]],
+      description: [null, [Validators.required]],
+      type: ["expense", [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
-      paid: [null, [Validators.required]],
+      paid: [true, [Validators.required]],
       categoryId: [null, [Validators.required]],
     });
   }
@@ -84,6 +108,12 @@ export class EntryFormComponent implements OnInit {
     }
   }
   
+  private loadCategories(){
+    this.categoryService.getAll().subscribe(
+      categories => this.categories = categories
+    );
+  }
+
   private setPageTitle(){
     if (this.currentAction == "new")
     {
@@ -133,4 +163,7 @@ export class EntryFormComponent implements OnInit {
     else
       this.serverErrorMessages = ["Falha na comunicação com o servidor. Por favor, tente mais tarde"]
   }
+
+}
+
 }

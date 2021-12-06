@@ -11,6 +11,7 @@ export class Entry {
         public paid?: boolean,
         public categoryId?: number,
         public category?: Category,
+        public user_id?: string,
     ){}
 
     static types = {
@@ -21,4 +22,5 @@ export class Entry {
     get paidText(): string {
         return this.paid ? 'Pago' : 'Pendente';
     }
+
 }

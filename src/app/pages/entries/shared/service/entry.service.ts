@@ -1,18 +1,22 @@
+import { CategoryService } from './../../../categories/shared/service/category.service';
 import { element } from 'protractor';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, flatMap, map } from 'rxjs/operators';
 import { Entry } from '../model/entry';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntryService {
   
-  private apiPath: string = "api/entries";
+  
+  user_id: string = "natalia_francisco";
+  private apiPath = environment.apiUrl + "/lancamentos?user_id=" + this.user_id;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private categoryService:CategoryService) { }
 
   getAll(): Observable<Entry[]>{
     return this.http.get(this.apiPath).pipe(
@@ -22,7 +26,7 @@ export class EntryService {
   }
 
   getById(id: number): Observable<Entry>{
-    const url = `${this.apiPath}/${id}`;
+    const url = `${this.apiPath}/lancamentos/${id}?user_id=${this.user_id}`;
     return this.http.get(url).pipe(
       catchError(this.handleError),
       map(this.jsonDataToEntry)
@@ -30,10 +34,18 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<Entry>{
-    return this.http.post(this.apiPath, entry).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToEntry)
+    entry.user_id = this.user_id;
+    entry.id = (Math.floor(Math.random() * (5)))
+    return  this.categoryService.getById(entry.categoryId).pipe(
+      flatMap(category => {
+        entry.category = category;
+        return this.http.post(this.apiPath, entry).pipe(
+          catchError(this.handleError),
+          map(this.jsonDataToEntry)
+        )
+      })
     )
+  
   }
 
   update(entry: Entry): Observable<Entry>{
