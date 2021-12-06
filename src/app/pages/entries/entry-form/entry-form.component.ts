@@ -13,6 +13,7 @@ import { toastr } from 'toastr';
   templateUrl: './entry-form.component.html',
   styleUrls: ['./entry-form.component.scss']
 })
+
 export class EntryFormComponent implements OnInit {
 
   currentAction: string;
@@ -163,7 +164,5 @@ export class EntryFormComponent implements OnInit {
     else
       this.serverErrorMessages = ["Falha na comunicação com o servidor. Por favor, tente mais tarde"]
   }
-
-}
 
 }

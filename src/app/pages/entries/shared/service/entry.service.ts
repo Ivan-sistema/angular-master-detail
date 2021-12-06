@@ -1,18 +1,16 @@
-import { CategoryService } from './../../../categories/shared/service/category.service';
-import { element } from 'protractor';
+import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
+import { CategoryService } from '../../../categories/shared/service/category.service';
 import { Entry } from '../model/entry';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntryService {
-  
-  
+
   user_id: string = "natalia_francisco";
   private apiPath = environment.apiUrl + "/lancamentos?user_id=" + this.user_id;
 
