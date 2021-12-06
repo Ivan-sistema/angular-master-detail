@@ -30,5 +30,4 @@ export class EntryListComponent implements OnInit {
     )
       }
   }
-
 }

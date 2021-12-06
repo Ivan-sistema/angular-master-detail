@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     EntriesRoutingModule,
     ReactiveFormsModule,
-    IMaskModule
+    IMaskModule,
+    ReactiveFormsModule
   ]
 })
 export class EntriesModule { }

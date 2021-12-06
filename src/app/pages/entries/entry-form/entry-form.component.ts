@@ -1,5 +1,3 @@
-import { CategoryService } from './../../categories/shared/service/category.service';
-import { toastr } from 'toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +5,8 @@ import { switchMap } from 'rxjs/operators';
 import { Entry } from '../shared/model/entry';
 import { EntryService } from '../shared/service/entry.service';
 import { Category } from '../../categories/shared/model/category.model';
+import { CategoryService } from './../../categories/shared/service/category.service';
+import { toastr } from 'toastr';
 
 @Component({
   selector: 'app-entry-form',
@@ -38,7 +38,7 @@ export class EntryFormComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private categoryService: CategoryService
-  ) { }
+    ) { }
 
   ngOnInit() {
     this.setCurrentAction();
@@ -114,7 +114,6 @@ export class EntryFormComponent implements OnInit {
     );
   }
 
-
   private setPageTitle(){
     if (this.currentAction == "new")
     {
@@ -164,4 +163,7 @@ export class EntryFormComponent implements OnInit {
     else
       this.serverErrorMessages = ["Falha na comunicação com o servidor. Por favor, tente mais tarde"]
   }
+
+}
+
 }

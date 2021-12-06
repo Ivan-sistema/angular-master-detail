@@ -36,7 +36,7 @@ export class EntryService {
   create(entry: Entry): Observable<Entry>{
     entry.user_id = this.user_id;
     entry.id = (Math.floor(Math.random() * (5)))
-   return  this.categoryService.getById(entry.categoryId).pipe(
+    return  this.categoryService.getById(entry.categoryId).pipe(
       flatMap(category => {
         entry.category = category;
         return this.http.post(this.apiPath, entry).pipe(
