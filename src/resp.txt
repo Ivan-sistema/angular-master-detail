@@ -1,0 +1,160 @@
+Item 1: Servives
+
+A) Tem o propósito de organizar o projeto de software angular,isolando
+   logica de negocios e separando-a dos controllers.
+
+B) o Angular distingue componentes de serviços para aumentar a capaciadade
+   de reutilização.
+
+C) Através de injeção de dependências,  usando import direto no componente e declarando o service no modulo.
+
+D) Pode ter uma tarefa de pegar dados, pode ter uma tarefa para atualizar e inserir dados.
+
+E) Verdadeiro, porque  o service  é usado quando uma funcionalidade comum precisa ser fornecida a
+   vários módulos.
+
+F) Verdadeiro, por que ele trabalha com conceito de responsábilidade unica.
+
+G) Pratico
+
+Item 1.1: Injeção de Dependências
+
+A) È um design Pattern que faz com que uma classe seja independênte das suas dependêcias.
+
+B) Falso, por que podemos ter dependêcias de varios tipos, como service, model, pipes etc.
+
+C) Verdadeiro, por que ele pode usar o mesmo metodo em varios locais.
+
+Item 2:
+
+A) E um protocolo que permite a obtenção de recursos, como documentos HTML
+è a base de qualquer troca de dados na web.
+
+B)    Comunicação RESTful que é uma cominicação de mais alto nivel,
+      Comunicação via websocket - comunica com servidores que tem suporte a WebSocket
+      Comunicação com GraphQL que consome uma mutation
+
+C) Get,Post, Delete,Put,Patch,Head,Trace,Options,Connect,
+
+D) import { Injectable } from '@angular/core';
+   import { HttpClient } from '@angular/common/http';
+
+E) Verdadeiro, com uso do RXJS torna-se mais fácil compor os códigos.
+
+F) Get: Solicita a representação de um recurso específico e ultilizando o método Get devem retornar apenas dados.
+   Post: É ultilizado para submeter uma entiadade a um recurso específico.
+   Delete: Remove um recurso específico.
+   Put: Subistitui todas as atuais reprentações do recurso de destino pela carga de dados da requisição.
+
+G) Verdadeiro, pois conseguimos retornar um erro caso venha um erro 404, 500 etc.
+
+H) Retorno
+200 - para quando retorna com sucesso
+400 - Solicitação incorreta
+401 - Não autorizado
+403 - Proibido
+404 - algo não encontrado
+500 - Erro em servidor
+504 - Tempo limite esgotado
+
+I) success que mostra que uma requisição foi do tipo 200 então os dados serão mostrado, error caso retorne um
+500 por exemplo então tratamos esses erros de acordo com sua familia de erros.
+
+J) return this.http.get<Hero[]> (this.heroesURL, options);
+   return this.http.post<Hero>(this.heroesUrl, hero, httpOptions);
+   return this.http.put<Hero>(this.herosUrl, hero, httpOptions);
+   return this.http.delele(url, httpOptions);
+
+K) Cabeçalhos HTTP permitem que o cliente e o servidor passem informações adicionais com a solicitação ou a resposta HTTP.
+
+L)  Permitem você interceptar solicitações HTTP de entrada e saída. E depois alterar de acordo com as necessidades de sua aplicação.
+   Autenticar usuários;
+   Adaptar informações;
+   E tratar erros do servidor.
+
+Item 3:
+
+A) É uma biblioteca JavaScript que traz o conceito de programação reactiva para a Web. Todavia, nada nos impede de utilizá-la na plataforma Node. js através do rx-node.
+
+B) Promise vai executar e utiliza-se o then() para tratar. Já o Observable não, ele espera Subscribe() onde é quem realmente executa e trata (reativo)
+
+C) quando temos interações com o usuário então é feito um evento dependendo do tipo de evento.
+
+D)  É um padrão de projeto de software que define uma dependência um para muitos entre de modo que quando um objeto muda
+   o estado, todos seus dependentes são notificados e atualizados automaticamente.
+
+E) É um padrão de projeto comportamental que permite a passagem sequencial através de uma estrutura de dados sem expor
+   seus detalhes internos.
+
+F) A programação funcional aproxima problemas computacionais como um exercicio a avalição de trnasformação e puras
+   de coleção de dados.
+
+G) Observável: representa a ideia de uma coleção invocável de valores ou eventos futuros.
+   Observer: é uma coleção de callbacks que sabem ouvir os valores entregues pelo Observable.
+   Assinatura: representa a execução de um Observable, é principalmente útil para cancelar a execução.
+   Operadores: são funções puros que permitem um estilo de programação funcional de lidar com coleções com operações como map, filter, concat, reduce, etc.
+   Assunto: é equivalente a um EventEmitter e a única forma de multicast de um valor ou evento para vários Observadores.
+   Schedulers: são despachantes para a simultaneidade de controle centralizado, permitindo-nos para coordenar quando computação acontece .
+
+H) são o outro tipo de operador, que podem ser chamados como funções autônomas para criar um novo observável.
+
+I) Ajax - Em poucas palavras, é o uso do objeto XMLHttpRequest para se comunicar com os scripts do lado do servidor.
+   Ex: const obs$ = ajax(`https://api.github.com/users?per_page=5`).
+
+   From converte vários outros objetos e tipos de dados em observáveis.
+   EX: const result = from(array);
+
+   FromEventaceita como primeiro argumento o destino do evento, que é um objeto com métodos para registrar funções do tratador de evento.
+   EX: const clicks = fromEvent(document, 'click');
+
+   Generatepermite que você crie um fluxo de valores gerado com um loop muito semelhante a um loop for tradicional.
+   Ex:const result = generate(0, x => x < 3, x => x + 1);
+
+   Converte os argumentos em uma sequência observável.
+   EX: of(10, 20, 30).subscribe
+
+   Intervalretorna um Observable que emite uma sequência infinita de inteiros ascendentes, com um intervalo de tempo constante de sua escolha entre essas emissões.
+   Ex: const numbers = interval(1000);
+
+  ThrowError esta função de criação é útil para criar um observável que criará um erro e um erro toda vez que for inscrito.
+   Ex:const errorWithTimestamp$ = throwError(() =>
+
+   Timer útil para criar atrasos no código ou competir com outros valores para tempos limites ad-hoc.
+   Ex: const result = timer(3000).pipe
+
+   J) São eles, concat,  forkJoin , merge
+
+   K) concatjunta vários Observáveis, inscrevendo-os um de cada vez e mesclando seus resultados na saída Observável
+   Ex: const result = concat(timer1, timer2, timer3);
+
+   forkJoiné um operador que recebe qualquer número de observáveis ​​de entrada que podem ser passados ​​como uma matriz ou um dicionário de observáveis ​​de entrada.
+   Ex: const observable = forkJoin({  foo: of(1, 2, 3, 4),
+
+   merge inscreve-se em cada Observable de entrada fornecida (como argumentos) e simplesmente encaminha (sem fazer nenhuma transformação) todos os valores de todos os Observáveis ​​de entrada para a saída Observable.
+   EX: const clicksOrTimer = merge(clicks, timer);
+
+   L) São eles: concatMap, map, map To, mergeMap, mergeMap To, switchMap, switchMap To.
+
+   M) ConcatMap projeta cada valor de origem para um Observable que é mesclado na saída Observable, de maneira serializada, esperando     que cada um seja concluído antes de mesclar o próximo.
+    EX: concatMap(ev => interval(1000).pipe(take(4))
+
+    Map Aplica uma determinada projectfunção a cada valor emitido pela fonte Observável e emite os valores resultantes como um Observável.
+    EX: const positions = clicks.pipe(map(ev => ev.clientX));
+
+    MapTo emite o valor constante fornecido na saída Observable sempre que a fonte Observable emite um valor.
+    EX: const greetings = clicks.pipe(mapTo('Hi'));
+
+    MergeMap projeta cada valor de origem para um Observável que é mesclado na saída Observável.
+    EX: const result = letters.pipe(mergeMap(x => interval(1000).pipe(map(i => x+i))),
+
+    MergeMap To projeta cada valor de origem para o mesmo Observable, que é mesclado várias vezes na saída Observable.
+    EX: const result = clicks.pipe(mergeMapTo(interval(1000)));
+
+   SwitchMap projeta cada valor de origem para um Observável que é mesclado na saída Observável, emitindo valores apenas do Observável projetado mais recentemente.
+   EX: const switched = of(1, 2, 3).pipe(switchMap((x: number) => of(x, x ** 2, x ** 3)));
+
+   SwitchMap To projeta cada valor de origem para o mesmo Observable, que é achatado várias vezes switchMapna saída Observable.
+   EX: const result = clicks.pipe(switchMapTo(interval(1000)));
+
+
+
